@@ -4,6 +4,7 @@ import com.asseco.demo.usercontacts.UserContactMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,8 +21,10 @@ public class UserMapper {
                 .idNumber(form.getIdNumber())
                 .build();
 
-        var contacts = userContactMapper.toUserContacts(user, form.getContacts());
-        user.setUserContacts(contacts);
+        if (Objects.nonNull(form.getContacts())) {
+            var contacts = userContactMapper.toUserContacts(user, form.getContacts());
+            user.setUserContacts(contacts);
+        }
 
         return user;
     }
